@@ -5,7 +5,8 @@ export default class SvgSprite {
   static defaults = {
     fileName: 'sprite.svg',
     extensions: ['.svg'],
-    svgoConfig: {}
+    svgoConfig: {},
+    xmlDeclaration: true
   }
 
   constructor(options = {}) {
@@ -38,8 +39,8 @@ export default class SvgSprite {
       ))
 
       Promise.all(symbols).then(symbol => {
-        const sprite = { svg: { symbol, xmlns: 'http://www.w3.org/2000/svg' } }
-        const output = `<?xml version="1.0" encoding="utf-8"?>${toXml(sprite)}`
+        const sprite = toXml({ svg: { symbol, xmlns: 'http://www.w3.org/2000/svg' } })
+        const output = opts.xmlDeclaration ? `<?xml version="1.0" encoding="utf-8"?>${sprite}` : sprite
 
         compilation.assets[opts.fileName] = {
           size: () => output.length,
