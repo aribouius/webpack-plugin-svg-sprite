@@ -1,6 +1,8 @@
 import path from 'path'
 import webpack from 'webpack'
 
+const CompressionPlugin = require('compression-webpack-plugin')
+
 export default (plugin, done) => {
   const config = {
     entry: [
@@ -11,7 +13,8 @@ export default (plugin, done) => {
       filename: 'main.js'
     },
     plugins: [
-      plugin
+      plugin,
+      new CompressionPlugin()
     ],
     module: {
       loaders: [
